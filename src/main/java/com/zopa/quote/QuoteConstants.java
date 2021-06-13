@@ -11,7 +11,7 @@ public class QuoteConstants {
     public final static String CURRENCY = PropertyLoader.getStringValue("currency.code");
     public final static String LOAN_AMORTIZATION_PERIOD = PropertyLoader.getStringValue("loan.amortization.period");
     public final static String LOAN_COMPOUNDING_TYPE = PropertyLoader.getStringValue("loan.compounding.type");
-    public final static long LOAN_LOWER_REQUEST_LIMIT = PropertyLoader.getLongValue("loan.lower.request.limits");
-    public final static long LOAN_UPPER_REQUEST_LIMIT = PropertyLoader.getLongValue("loan.upper.request.limits");
-    public final static long LOAN_REQUEST_MULTIPLES = PropertyLoader.getLongValue("loan.request.multiples");
+    public final static String LOAN_LOWER_REQUEST_LIMIT = PropertyLoader.getStringValue("loan.lower.request.limits");
+    public final static String LOAN_UPPER_REQUEST_LIMIT = PropertyLoader.getStringValue("loan.upper.request.limits");
+    public final static String LOAN_REQUEST_MULTIPLES = PropertyLoader.getStringValue("loan.request.multiples");
 }

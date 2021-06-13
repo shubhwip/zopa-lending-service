@@ -3,6 +3,8 @@ package com.zopa.runner;
 import com.zopa.quote.QuoteConstants;
 import lombok.extern.slf4j.Slf4j;
 
+import java.math.BigDecimal;
+
 @Slf4j
 public class Runner {
 
@@ -11,17 +13,10 @@ public class Runner {
             log.error("Please request some loan amount");
             throw new IllegalArgumentException("Please provide correct arguments");
         }
-        long loanAmount = 0L;
+        BigDecimal loanAmount = BigDecimal.ZERO;
         String defaultLendersFilePath = QuoteConstants.DEFAULT_LENDERS_FILE_PATH;
         try {
-            if (args.length == 1) {
-                loanAmount = Long.valueOf(Integer.parseInt(args[0]));
-            } else if (args.length == 2) {
-                loanAmount = Long.valueOf(Integer.parseInt(args[0]));
-                if (args[1] != null && !args[1].isEmpty()) {
-                    defaultLendersFilePath = args[1];
-                }
-            }
+            loanAmount = new BigDecimal(args[0]);
         } catch (Exception e) {
             log.error("Exception occured in parsing arguments passed to program {}", e);
         }

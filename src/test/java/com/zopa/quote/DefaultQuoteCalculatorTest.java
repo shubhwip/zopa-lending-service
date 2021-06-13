@@ -32,7 +32,7 @@ public class DefaultQuoteCalculatorTest {
         lenders.add(new Lender("Jane", new BigDecimal("0.069"), new BigDecimal("480")));
         lenders.add(new Lender("Fred", new BigDecimal("0.071"), new BigDecimal("520")));
         // Act
-        Quote quote = quoteCalculator.getQuote(lenders, 1000L);
+        Quote quote = quoteCalculator.getQuote(lenders, new BigDecimal("1000"));
         // Assert
         assertThat(new BigDecimal("1115.64"), Matchers.comparesEqualTo(quote.getTotalRepayment()));
     }
@@ -41,7 +41,7 @@ public class DefaultQuoteCalculatorTest {
     public void givenNullLendersAndGivenRequestedLendingAmount_WhenRequestedLendingAmountCanNotBeProvided_ReturnsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
-                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(null, 1000L));
+                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(null, new BigDecimal("1000")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available. It is not Possible to provide a quote"));
     }
@@ -50,7 +50,7 @@ public class DefaultQuoteCalculatorTest {
     public void givenNullLendersAndGivenRequestedLendingAmountToZero_WhenRequestedLendingAmountCanBeProvided_ReturnsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
-                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(null, 0L));
+                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(null, new BigDecimal("1000")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available. It is not Possible to provide a quote"));
     }
@@ -61,7 +61,7 @@ public class DefaultQuoteCalculatorTest {
         lenders.add(new Lender("Jane", new BigDecimal("0.069"), new BigDecimal("480")));
         lenders.add(new Lender("Fred", new BigDecimal("0.071"), new BigDecimal("520")));
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
-                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(lenders, -3L));
+                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(lenders, new BigDecimal("-3")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
     }
@@ -70,7 +70,7 @@ public class DefaultQuoteCalculatorTest {
     public void givenListOfLendersEmptyAndGivenRequestedLendingAmount_WhenRequestedLendingAmountCanNotBeProvided_ReturnsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
-                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(lenders, 1000L));
+                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(lenders, new BigDecimal("1000")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available. It is not Possible to provide a quote"));
     }

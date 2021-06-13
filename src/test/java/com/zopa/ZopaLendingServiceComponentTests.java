@@ -42,7 +42,7 @@ public class ZopaLendingServiceComponentTests {
         // Arrange
         List<Lender> lenders = parser.getLenders("src/test/resources/input/lenders-test1.csv");
         // Act
-        Quote quote = quoteCalculator.getQuote(lenders, 1000L);
+        Quote quote = quoteCalculator.getQuote(lenders, new BigDecimal("1000"));
         //log.info("Quote {}", quote.toString());
         // Assert
         assertThat(new BigDecimal("1115.64").setScale(2), Matchers.comparesEqualTo(quote.getTotalRepayment()));
@@ -53,14 +53,14 @@ public class ZopaLendingServiceComponentTests {
         // Act
         List<Lender> lenders = parser.getLenders("src/test/resources/input/lenders-test1.csv");
         // Assert
-        assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(lenders, 1700L));
+        assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(lenders, new BigDecimal("1700")));
     }
 
     @Test
-    public void givenBigLendersListAndRequestedLoan_WhenLoanCanBeProvided_ReturnsQuote() throws InputFileParseException,QuoteNotPossibleException {
+    public void givenBigLendersListAndRequestedLoan_WhenLoanCanBeProvided_ReturnsQuote() throws InputFileParseException, QuoteNotPossibleException {
         // Act
         List<Lender> lenders = parser.getLenders("src/test/resources/input/lenders-test2.csv");
-        Quote quote = quoteCalculator.getQuote(lenders, 1700L);
+        Quote quote = quoteCalculator.getQuote(lenders, new BigDecimal("1700"));
         //log.info("Quote {}", quote.toString());
         // Assert
         assertThat(new BigDecimal("1902.60").setScale(2), Matchers.comparesEqualTo(quote.getTotalRepayment()));
@@ -73,7 +73,7 @@ public class ZopaLendingServiceComponentTests {
     public void givenNullLendersAndGivenRequestedLendingAmount_WhenRequestedLendingAmountCanNotBeProvided_ReturnsQuoteNotPossibleException() {
         // Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
-                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(null, 1000L));
+                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(null, new BigDecimal("1000")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available. It is not Possible to provide a quote"));
     }
@@ -82,7 +82,7 @@ public class ZopaLendingServiceComponentTests {
     public void givenNullLendersAndGivenRequestedLendingAmountToZero_WhenRequestedLendingAmountCanBeProvided_ReturnsQuoteNotPossibleException() {
         // Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
-                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(null, 0L));
+                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(null, BigDecimal.ZERO));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available. It is not Possible to provide a quote"));
     }
@@ -92,7 +92,7 @@ public class ZopaLendingServiceComponentTests {
         // Act
         List<Lender> lenders = parser.getLenders("src/test/resources/input/lenders-test2.csv");
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
-                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(lenders, -3L));
+                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(lenders, new BigDecimal("-3")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
     }
@@ -101,7 +101,7 @@ public class ZopaLendingServiceComponentTests {
     public void givenListOfLendersEmptyAndGivenRequestedLendingAmount_WhenRequestedLendingAmountCanNotBeProvided_ReturnsQuoteNotPossibleException() {
         // Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
-                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(new ArrayList<>(), 1000L));
+                .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(new ArrayList<>(), new BigDecimal("1000")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available. It is not Possible to provide a quote"));
     }

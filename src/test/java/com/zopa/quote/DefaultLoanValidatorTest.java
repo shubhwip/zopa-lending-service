@@ -33,7 +33,7 @@ public class DefaultLoanValidatorTest {
     @Test
     public void givenListOfLendersAndGivenRequestedLendingAmount_WhenRequestedLendingAmountCanBeProvided_ReturnsTrue() throws QuoteNotPossibleException {
         // Arrange and Act
-        boolean result = loanValidator.validateLoanProvision(lenders, 1000L);
+        boolean result = loanValidator.validateLoanProvision(lenders, new BigDecimal("1000"));
         // Assert
         Assertions.assertEquals(true, result);
     }
@@ -42,7 +42,7 @@ public class DefaultLoanValidatorTest {
     public void givenListOfLendersAndGivenRequestedLendingAmount_WhenRequestedLendingAmountCantBeProvided_ThrowsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
-                () -> loanValidator.validateLoanProvision(lenders, 1700L));
+                () -> loanValidator.validateLoanProvision(lenders, new BigDecimal("1700")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no lenders available currently to serve requested loan amount"));
     }
@@ -51,7 +51,7 @@ public class DefaultLoanValidatorTest {
     public void givenListOfLendersAndGivenRequestedLendingAmount_WhenRequestedLendingAmountIsBelowTheRequiredLimits_ThrowsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
-                () -> loanValidator.validateLoanProvision(lenders, 991L));
+                () -> loanValidator.validateLoanProvision(lenders, new BigDecimal("991")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
     }
@@ -60,7 +60,7 @@ public class DefaultLoanValidatorTest {
     public void givenListOfLendersAndGivenRequestedLendingAmount_WhenRequestedLendingAmountIsBelowTheRequiredLimitsAndMultipleOf100_ThrowsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
-                () -> loanValidator.validateLoanProvision(lenders, 900L));
+                () -> loanValidator.validateLoanProvision(lenders, new BigDecimal("900")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
     }
@@ -69,7 +69,7 @@ public class DefaultLoanValidatorTest {
     public void givenListOfLendersAndGivenRequestedLendingAmount_WhenRequestedLendingAmountIsAboveTheRequiredLimits_ThrowsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
-                () -> loanValidator.validateLoanProvision(lenders, 16111L));
+                () -> loanValidator.validateLoanProvision(lenders, new BigDecimal("16111")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
     }
@@ -80,7 +80,7 @@ public class DefaultLoanValidatorTest {
     public void givenLendersAsNullAndGivenRequestedLendingAmount_WhenRequestedLendingAmountIsInTheLimits_ThrowsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
-                () -> loanValidator.validateLoanProvision(null, 1000L));
+                () -> loanValidator.validateLoanProvision(null, new BigDecimal("1000")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available"));
     }
@@ -89,7 +89,7 @@ public class DefaultLoanValidatorTest {
     public void givenLendersAsNullAndGivenRequestedLendingAmountAsZero_WhenRequestedLendingAmountIsNotInTheRequiredLimits_ThrowsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
-                () -> loanValidator.validateLoanProvision(null, 0L));
+                () -> loanValidator.validateLoanProvision(null, BigDecimal.ZERO));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available"));
     }
@@ -98,7 +98,7 @@ public class DefaultLoanValidatorTest {
     public void givenLendersAndGivenRequestedLendingAmountAsNegative_WhenRequestedLendingAmountIsNotInTheRequiredLimits_ThrowsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
-                () -> loanValidator.validateLoanProvision(lenders, -3L));
+                () -> loanValidator.validateLoanProvision(lenders, new BigDecimal("-3")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
     }
@@ -107,7 +107,7 @@ public class DefaultLoanValidatorTest {
     public void givenLendersAsEmptyAndGivenRequestedLendingAmount_WhenRequestedLendingAmountIsInTheRequiredLimits_ThrowsQuoteNotPossibleException() {
         // Arrange and Act
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
-                () -> loanValidator.validateLoanProvision(new ArrayList<>(), 1000L));
+                () -> loanValidator.validateLoanProvision(new ArrayList<>(), new BigDecimal("1000")));
         // Assert
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available"));
     }

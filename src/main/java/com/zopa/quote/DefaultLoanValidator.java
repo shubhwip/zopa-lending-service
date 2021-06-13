@@ -10,18 +10,20 @@ import java.util.List;
 @Slf4j
 public class DefaultLoanValidator implements ILoanValidator<Lender> {
     @Override
-    public boolean validateLoanProvision(List<Lender> lenders, long loanAmount) throws QuoteNotPossibleException {
+    public boolean validateLoanProvision(List<Lender> lenders, BigDecimal loanAmount) throws QuoteNotPossibleException {
         if (lenders == null || lenders.isEmpty()) {
             log.error("There are no Lenders available. It is not Possible to provide a quote");
             throw new QuoteNotPossibleException("There are no Lenders available. It is not Possible to provide a quote");
         }
         BigDecimal amount = lenders.stream().map(Lender::getAvailable).reduce(BigDecimal::add)
                 .orElseThrow(() -> new QuoteNotPossibleException("Exception Occured in calculating sum for Lenders available amount. It is not possible to provide a quote."));
-        if ((loanAmount < QuoteConstants.LOAN_LOWER_REQUEST_LIMIT || loanAmount > QuoteConstants.LOAN_UPPER_REQUEST_LIMIT) || (loanAmount % QuoteConstants.LOAN_REQUEST_MULTIPLES != 0)) {
+        if ((loanAmount.compareTo(new BigDecimal((QuoteConstants.LOAN_LOWER_REQUEST_LIMIT))) == -1
+                || loanAmount.compareTo(new BigDecimal((QuoteConstants.LOAN_UPPER_REQUEST_LIMIT))) == 1
+                || !loanAmount.remainder(new BigDecimal((QuoteConstants.LOAN_REQUEST_MULTIPLES))).equals(BigDecimal.ZERO))) {
             log.error("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive.");
             log.error("It is not possible to provide a quote.");
             throw new QuoteNotPossibleException("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive. It is not possible to provide a quote.");
-        } else if (amount.compareTo(new BigDecimal(loanAmount)) == -1) {
+        } else if (amount.compareTo(loanAmount) == -1) {
             log.error("There are no lenders available currently to serve requested loan amount. It is not possible to provide a quote.");
             throw new QuoteNotPossibleException("There are no lenders available currently to serve requested loan amount. It is not possible to provide a quote.");
         }

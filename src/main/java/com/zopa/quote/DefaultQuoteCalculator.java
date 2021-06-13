@@ -25,17 +25,16 @@ public class DefaultQuoteCalculator implements IQuoteCalculator<Quote, Lender> {
     }
 
     @Override
-    public Quote getQuote(List<Lender> lenders, long loanAmount) throws QuoteNotPossibleException {
+    public Quote getQuote(List<Lender> lenders, BigDecimal loanAmount) throws QuoteNotPossibleException {
         loanValidator.validateLoanProvision(lenders, loanAmount);
-        BigDecimal loanAmountBd = new BigDecimal(loanAmount);
-        List<Lender> selectedLenders = selectLenders(lenders, loanAmountBd);
+        List<Lender> selectedLenders = selectLenders(lenders, loanAmount);
         BigDecimal avgInterestRate = LenderHelper.getAverageRate(selectedLenders);
         log.debug("Average Interest Rate is {}", avgInterestRate);
         BigDecimal effectiveInterestRate = LoanCalculator.calculate(avgInterestRate, QuoteConstants.DEFAULT_LOAN_PERIOD);
-        MonetaryAmount amount = LoanCalculator.calculate(Money.of(loanAmountBd, QuoteConstants.CURRENCY),
+        MonetaryAmount amount = LoanCalculator.calculate(Money.of(loanAmount, QuoteConstants.CURRENCY),
                 effectiveInterestRate.divide(new BigDecimal(QuoteConstants.LOAN_AMORTIZATION_PERIOD), MathContext.DECIMAL32), QuoteConstants.DEFAULT_LOAN_PERIOD);
         BigDecimal monthlyAmount = new BigDecimal(amount.getNumber().toString()).setScale(QuoteConstants.DEFAULT_NUMBER_SCALE, BigDecimal.ROUND_HALF_EVEN);
-        return new Quote(loanAmountBd,
+        return new Quote(loanAmount,
                 effectiveInterestRate.multiply(new BigDecimal("100")).setScale(QuoteConstants.DEFAULT_NUMBER_SCALE, BigDecimal.ROUND_HALF_EVEN),
                 monthlyAmount,
                 monthlyAmount.multiply(BigDecimal.valueOf(QuoteConstants.DEFAULT_LOAN_PERIOD)));
