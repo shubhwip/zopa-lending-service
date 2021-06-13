@@ -22,6 +22,6 @@ public final class LenderHelper {
             log.debug("Lender Rate inside getAverageRate API, {}", lender.getRate());
             sum = sum.add(lender.getRate(), new MathContext(4));
         }
-        return sum.divide(BigDecimal.valueOf(lenders.size()));
+        return sum.divide(new BigDecimal(lenders.size()));
     }
 }

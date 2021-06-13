@@ -53,7 +53,7 @@ public class DefaultLoanValidatorTest {
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
                 () -> loanValidator.validateLoanProvision(lenders, new BigDecimal("991")));
         // Assert
-        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
+        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any 100 increment between 1000 and 15000 inclusive"));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class DefaultLoanValidatorTest {
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
                 () -> loanValidator.validateLoanProvision(lenders, new BigDecimal("900")));
         // Assert
-        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
+        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any 100 increment between 1000 and 15000 inclusive"));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class DefaultLoanValidatorTest {
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
                 () -> loanValidator.validateLoanProvision(lenders, new BigDecimal("16111")));
         // Assert
-        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
+        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any 100 increment between 1000 and 15000 inclusive"));
     }
 
     // Added Negative test cases as to what can fail.
@@ -100,7 +100,7 @@ public class DefaultLoanValidatorTest {
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions.assertThrows(QuoteNotPossibleException.class,
                 () -> loanValidator.validateLoanProvision(lenders, new BigDecimal("-3")));
         // Assert
-        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
+        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any 100 increment between 1000 and 15000 inclusive"));
     }
 
     @Test

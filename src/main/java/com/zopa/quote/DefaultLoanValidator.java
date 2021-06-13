@@ -20,9 +20,8 @@ public class DefaultLoanValidator implements ILoanValidator<Lender> {
         if ((loanAmount.compareTo(new BigDecimal((QuoteConstants.LOAN_LOWER_REQUEST_LIMIT))) == -1
                 || loanAmount.compareTo(new BigDecimal((QuoteConstants.LOAN_UPPER_REQUEST_LIMIT))) == 1
                 || !loanAmount.remainder(new BigDecimal((QuoteConstants.LOAN_REQUEST_MULTIPLES))).equals(BigDecimal.ZERO))) {
-            log.error("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive.");
-            log.error("It is not possible to provide a quote.");
-            throw new QuoteNotPossibleException("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive. It is not possible to provide a quote.");
+            log.error("A quote may be requested in any 100 increment between 1000 and 15000 inclusive. It is not possible to provide a quote.");
+            throw new QuoteNotPossibleException("A quote may be requested in any 100 increment between 1000 and 15000 inclusive. It is not possible to provide a quote.");
         } else if (amount.compareTo(loanAmount) == -1) {
             log.error("There are no lenders available currently to serve requested loan amount. It is not possible to provide a quote.");
             throw new QuoteNotPossibleException("There are no lenders available currently to serve requested loan amount. It is not possible to provide a quote.");

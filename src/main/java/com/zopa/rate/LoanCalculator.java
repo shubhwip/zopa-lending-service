@@ -1,5 +1,6 @@
 package com.zopa.rate;
 
+import com.zopa.quote.QuoteConstants;
 import lombok.Getter;
 import org.javamoney.moneta.Money;
 
@@ -56,15 +57,11 @@ public final class LoanCalculator implements MonetaryOperator {
      * @return the resulting amount, never null.
      */
     public static BigDecimal calculate(BigDecimal rate, int periods) {
-        if (rate.equals(BigDecimal.ZERO))
+        if (rate.equals(BigDecimal.ZERO) || periods == 0)
             return BigDecimal.ZERO;
-        if (periods == 0) {
-            return BigDecimal.ZERO;
-        }
-        final BigDecimal ONE = new BigDecimal(1, MathContext.DECIMAL32);
         BigDecimal baseFactor = rate.divide(BigDecimal.valueOf(periods), MathContext.DECIMAL32)
-                .add(ONE);
-        return baseFactor.pow(periods).subtract(ONE);
+                .add(BigDecimal.ONE);
+        return baseFactor.pow(periods).subtract(BigDecimal.ONE);
     }
 
     /**
@@ -77,16 +74,15 @@ public final class LoanCalculator implements MonetaryOperator {
      */
     public static MonetaryAmount calculate(MonetaryAmount amount, BigDecimal rate, int periods) {
         if (amount == null || rate.equals(BigDecimal.ZERO))
-            return Money.of(0, "GBP");
+            return Money.of(0, QuoteConstants.CURRENCY);
         if (periods == 0) {
             return amount.getFactory().setNumber(0.0).create();
         }
-        final BigDecimal ONE = new BigDecimal(1, MathContext.DECIMAL32);
         return amount.multiply(rate)
                 .divide(
-                        ONE.subtract(
-                                ONE.divide((
-                                        ONE.add(rate)).pow(periods), MathContext.DECIMAL32), MathContext.DECIMAL32));
+                        BigDecimal.ONE.subtract(
+                                BigDecimal.ONE.divide((
+                                        BigDecimal.ONE.add(rate)).pow(periods), MathContext.DECIMAL32), MathContext.DECIMAL32));
     }
 
     /**

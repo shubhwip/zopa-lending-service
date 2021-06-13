@@ -1,6 +1,7 @@
 package com.zopa.rate;
 
 
+import com.zopa.quote.QuoteConstants;
 import org.hamcrest.Matchers;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
@@ -26,24 +27,22 @@ public class LoanCalculatorTest {
         // Arrange and Act
         BigDecimal eir = LoanCalculator.calculate(BigDecimal.ZERO, 36).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
-        //Assertions.assertEquals(BigDecimal.valueOf(0.00).setScale(2), eir.setScale(2, BigDecimal.ROUND_HALF_EVEN));
         assertThat(BigDecimal.ZERO.setScale(2), Matchers.comparesEqualTo(eir));
     }
 
     @Test
     public void shouldReturnEffectiveInterestRateAsZerp_GivenAvgInterestRateAndTimePeriodAsZero() {
         // Arrange and Act
-        BigDecimal eir = LoanCalculator.calculate(BigDecimal.valueOf(0.072), 0).setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        BigDecimal eir = LoanCalculator.calculate(new BigDecimal("0.072"), 0).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
-        //Assertions.assertEquals(BigDecimal.valueOf(0.00).setScale(2), eir.setScale(2, BigDecimal.ROUND_HALF_EVEN));
         assertThat(BigDecimal.ZERO.setScale(2), Matchers.comparesEqualTo(eir));
     }
 
     @Test
     public void shouldReturnMonthlyPayment_GivenInitialLoanAmountAndAvgInterestRateAndTimePeriod() {
         // Arrange and Act
-        MonetaryAmount amount = LoanCalculator.calculate(Money.of(1000, "GBP"),
-                BigDecimal.valueOf(0.072), 36);
+        MonetaryAmount amount = LoanCalculator.calculate(Money.of(1000, QuoteConstants.CURRENCY),
+                new BigDecimal("0.072"), 36);
         BigDecimal result = new BigDecimal(amount.getNumber().toString()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
         assertThat(new BigDecimal("78.42").setScale(2), Matchers.comparesEqualTo(result));
@@ -53,7 +52,7 @@ public class LoanCalculatorTest {
     public void shouldReturnMonthlyPaymentAsZero_GivenInitialLoanAmountAsNullAndAvgInterestRateAndTimePeriod() {
         // Arrange and Act
         MonetaryAmount amount = LoanCalculator.calculate(null,
-                BigDecimal.valueOf(0.072), 36);
+                new BigDecimal("0.072"), 36);
         BigDecimal result = new BigDecimal(amount.getNumber().toString()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
         assertThat(BigDecimal.ZERO.setScale(2), Matchers.comparesEqualTo(result));
@@ -73,7 +72,7 @@ public class LoanCalculatorTest {
     public void shouldReturnMonthlyPaymentAsZero_GivenInitialLoanAmountAndAvgInterestAndTimePeriodAsZero() {
         // Arrange and Act
         MonetaryAmount amount = LoanCalculator.calculate(null,
-                BigDecimal.valueOf(0.072), 0);
+                new BigDecimal("0.072"), 0);
         BigDecimal result = new BigDecimal(amount.getNumber().toString()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
         assertThat(BigDecimal.ZERO.setScale(2), Matchers.comparesEqualTo(result));

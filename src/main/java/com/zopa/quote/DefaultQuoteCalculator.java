@@ -37,7 +37,7 @@ public class DefaultQuoteCalculator implements IQuoteCalculator<Quote, Lender> {
         return new Quote(loanAmount,
                 effectiveInterestRate.multiply(new BigDecimal("100")).setScale(QuoteConstants.DEFAULT_NUMBER_SCALE, BigDecimal.ROUND_HALF_EVEN),
                 monthlyAmount,
-                monthlyAmount.multiply(BigDecimal.valueOf(QuoteConstants.DEFAULT_LOAN_PERIOD)));
+                monthlyAmount.multiply(new BigDecimal(QuoteConstants.DEFAULT_LOAN_PERIOD)));
     }
 
     @Override

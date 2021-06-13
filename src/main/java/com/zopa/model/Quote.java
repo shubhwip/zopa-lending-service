@@ -1,7 +1,10 @@
 package com.zopa.model;
 
 import com.zopa.quote.QuoteConstants;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
@@ -20,9 +23,9 @@ public class Quote {
 
     @Override
     public String toString() {
-        return "\nRequested Amount: " + loanAmount + " GBP\n" +
+        return "\nRequested Amount: " + loanAmount + " " + QuoteConstants.CURRENCY + "\n" +
                 "Annual Interest Rate: " + annualInterestRate + "%\n" +
-                QuoteConstants.LOAN_COMPOUNDING_TYPE + " Repayment: " + monthlyRepayment + " GBP\n" +
-                "Total Repayment: " + totalRepayment + " GBP";
+                QuoteConstants.LOAN_COMPOUNDING_TYPE + " Repayment: " + monthlyRepayment + " " + QuoteConstants.CURRENCY + "\n" +
+                "Total Repayment: " + totalRepayment + " " + QuoteConstants.CURRENCY;
     }
 }

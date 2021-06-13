@@ -94,7 +94,7 @@ public class ZopaLendingServiceComponentTests {
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
                 .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(lenders, new BigDecimal("-3")));
         // Assert
-        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any GBP 100 increment between GBP 1000 and GBP 15000 inclusive"));
+        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("A quote may be requested in any 100 increment between 1000 and 15000 inclusive"));
     }
 
     @Test
