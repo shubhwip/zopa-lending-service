@@ -75,7 +75,7 @@ public class ZopaLendingServiceComponentTests {
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
                 .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(null, 1000L));
         // Assert
-        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("Either lenders are not available or requested loan amount is less than equal to zero"));
+        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available. It is not Possible to provide a quote"));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class ZopaLendingServiceComponentTests {
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
                 .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(null, 0L));
         // Assert
-        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("Either lenders are not available or requested loan amount is less than equal to zero"));
+        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available. It is not Possible to provide a quote"));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class ZopaLendingServiceComponentTests {
         QuoteNotPossibleException quoteNotPossibleExceptionThrown = Assertions
                 .assertThrows(QuoteNotPossibleException.class, () -> quoteCalculator.getQuote(new ArrayList<>(), 1000L));
         // Assert
-        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("Either lenders are not available or requested loan amount is less than equal to zero"));
+        Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available. It is not Possible to provide a quote"));
     }
 
 }

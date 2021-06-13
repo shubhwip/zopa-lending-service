@@ -26,10 +26,6 @@ public class DefaultQuoteCalculator implements IQuoteCalculator<Quote, Lender> {
 
     @Override
     public Quote getQuote(List<Lender> lenders, long loanAmount) throws QuoteNotPossibleException {
-        if (lenders == null || lenders.isEmpty()) {
-            log.error("Either lenders are not available or requested loan amount is less than equal to zero");
-            throw new QuoteNotPossibleException("Either lenders are not available or requested loan amount is less than equal to zero. It is not possible to provide a quote.");
-        }
         loanValidator.validateLoanProvision(lenders, loanAmount);
         BigDecimal loanAmountBd = new BigDecimal(loanAmount);
         List<Lender> selectedLenders = selectLenders(lenders, loanAmountBd);
