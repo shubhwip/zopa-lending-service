@@ -45,11 +45,11 @@ public class ZopaLendingServiceComponentTests {
         Quote quote = quoteCalculator.getQuote(lenders, new BigDecimal("1000"));
         //log.info("Quote {}", quote.toString());
         // Assert
-        assertThat(new BigDecimal("1115.64").setScale(2), Matchers.comparesEqualTo(quote.getTotalRepayment()));
+        assertThat(new BigDecimal("1115.64").setScale(2, BigDecimal.ROUND_HALF_EVEN), Matchers.comparesEqualTo(quote.getTotalRepayment()));
     }
 
     @Test
-    public void givenLendersAndRequestedLoan_WhenLoanCanNotBeProvided_ThrowsQuoteNotPossibleExcetion() throws InputFileParseException {
+    public void givenLendersAndRequestedLoan_WhenLoanCanNotBeProvided_ThrowsQuoteNotPossibleException() throws InputFileParseException {
         // Act
         List<Lender> lenders = parser.getLenders("src/test/resources/input/lenders-test1.csv");
         // Assert
@@ -63,7 +63,7 @@ public class ZopaLendingServiceComponentTests {
         Quote quote = quoteCalculator.getQuote(lenders, new BigDecimal("1700"));
         //log.info("Quote {}", quote.toString());
         // Assert
-        assertThat(new BigDecimal("1902.60").setScale(2), Matchers.comparesEqualTo(quote.getTotalRepayment()));
+        assertThat(new BigDecimal("1902.60").setScale(2, BigDecimal.ROUND_HALF_EVEN), Matchers.comparesEqualTo(quote.getTotalRepayment()));
     }
 
 

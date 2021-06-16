@@ -19,23 +19,23 @@ public class LoanCalculatorTest {
         BigDecimal eir = LoanCalculator.calculate(new BigDecimal("0.072"), 36).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
         //Assertions.assertEquals(new BigDecimal("0.08").setScale(2), eir);
-        assertThat(new BigDecimal("0.07").setScale(2), Matchers.comparesEqualTo(eir));
+        assertThat(new BigDecimal("0.07").setScale(2, BigDecimal.ROUND_HALF_EVEN), Matchers.comparesEqualTo(eir));
     }
 
     @Test
-    public void shouldReturnEffectiveInterestRateAsZerp_GivenAvgInterestRateAsZeroAndTimePeriod() {
+    public void shouldReturnEffectiveInterestRateAsZero_GivenAvgInterestRateAsZeroAndTimePeriod() {
         // Arrange and Act
         BigDecimal eir = LoanCalculator.calculate(BigDecimal.ZERO, 36).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
-        assertThat(BigDecimal.ZERO.setScale(2), Matchers.comparesEqualTo(eir));
+        assertThat(BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_HALF_EVEN), Matchers.comparesEqualTo(eir));
     }
 
     @Test
-    public void shouldReturnEffectiveInterestRateAsZerp_GivenAvgInterestRateAndTimePeriodAsZero() {
+    public void shouldReturnEffectiveInterestRateAsZero_GivenAvgInterestRateAndTimePeriodAsZero() {
         // Arrange and Act
         BigDecimal eir = LoanCalculator.calculate(new BigDecimal("0.072"), 0).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
-        assertThat(BigDecimal.ZERO.setScale(2), Matchers.comparesEqualTo(eir));
+        assertThat(BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_HALF_EVEN), Matchers.comparesEqualTo(eir));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class LoanCalculatorTest {
                 new BigDecimal("0.072"), 36);
         BigDecimal result = new BigDecimal(amount.getNumber().toString()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
-        assertThat(new BigDecimal("78.42").setScale(2), Matchers.comparesEqualTo(result));
+        assertThat(new BigDecimal("78.42").setScale(2, BigDecimal.ROUND_HALF_EVEN), Matchers.comparesEqualTo(result));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class LoanCalculatorTest {
                 new BigDecimal("0.072"), 36);
         BigDecimal result = new BigDecimal(amount.getNumber().toString()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
-        assertThat(BigDecimal.ZERO.setScale(2), Matchers.comparesEqualTo(result));
+        assertThat(BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_HALF_EVEN), Matchers.comparesEqualTo(result));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class LoanCalculatorTest {
                 BigDecimal.ZERO, 36);
         BigDecimal result = new BigDecimal(amount.getNumber().toString()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
-        assertThat(BigDecimal.ZERO.setScale(2), Matchers.comparesEqualTo(result));
+        assertThat(BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_HALF_EVEN), Matchers.comparesEqualTo(result));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class LoanCalculatorTest {
                 new BigDecimal("0.072"), 0);
         BigDecimal result = new BigDecimal(amount.getNumber().toString()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
         // Assert
-        assertThat(BigDecimal.ZERO.setScale(2), Matchers.comparesEqualTo(result));
+        assertThat(BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_HALF_EVEN), Matchers.comparesEqualTo(result));
     }
 
 }

@@ -6,5 +6,5 @@ import com.zopa.model.Lender;
 import java.util.List;
 
 public interface IParser<L extends Lender> {
-    abstract List<L> getLenders(String filename) throws InputFileParseException;
+    List<L> getLenders(String filename) throws InputFileParseException;
 }

@@ -16,13 +16,13 @@ public class DefaultLoanValidator implements ILoanValidator<Lender> {
             throw new QuoteNotPossibleException("There are no Lenders available. It is not Possible to provide a quote");
         }
         BigDecimal amount = lenders.stream().map(Lender::getAvailable).reduce(BigDecimal::add)
-                .orElseThrow(() -> new QuoteNotPossibleException("Exception Occured in calculating sum for Lenders available amount. It is not possible to provide a quote."));
-        if ((loanAmount.compareTo(new BigDecimal((QuoteConstants.LOAN_LOWER_REQUEST_LIMIT))) == -1
-                || loanAmount.compareTo(new BigDecimal((QuoteConstants.LOAN_UPPER_REQUEST_LIMIT))) == 1
+                .orElseThrow(() -> new QuoteNotPossibleException("Exception Occurred in calculating sum for Lenders available amount. It is not possible to provide a quote."));
+        if ((loanAmount.compareTo(new BigDecimal((QuoteConstants.LOAN_LOWER_REQUEST_LIMIT))) < 0
+                || loanAmount.compareTo(new BigDecimal((QuoteConstants.LOAN_UPPER_REQUEST_LIMIT))) > 0
                 || !loanAmount.remainder(new BigDecimal((QuoteConstants.LOAN_REQUEST_MULTIPLES))).equals(BigDecimal.ZERO))) {
             log.error("A quote may be requested in any 100 increment between 1000 and 15000 inclusive. It is not possible to provide a quote.");
             throw new QuoteNotPossibleException("A quote may be requested in any 100 increment between 1000 and 15000 inclusive. It is not possible to provide a quote.");
-        } else if (amount.compareTo(loanAmount) == -1) {
+        } else if (amount.compareTo(loanAmount) < 0) {
             log.error("There are no lenders available currently to serve requested loan amount. It is not possible to provide a quote.");
             throw new QuoteNotPossibleException("There are no lenders available currently to serve requested loan amount. It is not possible to provide a quote.");
         }

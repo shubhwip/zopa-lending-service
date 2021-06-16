@@ -18,7 +18,7 @@ public class Runner {
         try {
             loanAmount = new BigDecimal(args[0]);
         } catch (Exception e) {
-            log.error("Exception occured in parsing arguments passed to program {}", e);
+            log.error("Exception occurred in parsing arguments passed to program {}", e.getMessage());
         }
         IQuoteRunner quoteRunner = new DefaultQuoteRunner(defaultLendersFilePath, loanAmount);
         quoteRunner.run();

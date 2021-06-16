@@ -2,15 +2,13 @@ package com.zopa.model;
 
 import com.zopa.quote.QuoteConstants;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NonNull;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @AllArgsConstructor
-@Setter
-@Getter
+@Data
 public class Quote {
     @NonNull
     private BigDecimal loanAmount;

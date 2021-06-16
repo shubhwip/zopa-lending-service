@@ -18,16 +18,12 @@ public class PropertyLoader {
             properties.load(input);
 
         } catch (IOException ex) {
-            log.error("Error occured while loading properties file ,{}", ex.getStackTrace());
+            log.error("Error occurred while loading properties file ,{}", ex.getMessage());
         }
     }
 
     public static int getIntValue(final String value) {
         return Integer.parseInt(String.valueOf(properties.get(value)));
-    }
-
-    public static long getLongValue(final String value) {
-        return Long.parseLong(String.valueOf(properties.get(value)));
     }
 
     public static String getStringValue(final String value) {

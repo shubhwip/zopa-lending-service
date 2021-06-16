@@ -18,9 +18,9 @@ import java.util.List;
 @Slf4j
 public class DefaultQuoteCalculator implements IQuoteCalculator<Quote, Lender> {
 
-    private ILoanValidator loanValidator;
+    private final ILoanValidator<Lender> loanValidator;
 
-    public DefaultQuoteCalculator(ILoanValidator loanValidator) {
+    public DefaultQuoteCalculator(ILoanValidator<Lender> loanValidator) {
         this.loanValidator = loanValidator;
     }
 
@@ -42,11 +42,11 @@ public class DefaultQuoteCalculator implements IQuoteCalculator<Quote, Lender> {
 
     @Override
     public List<Lender> selectLenders(List<Lender> lenders, BigDecimal loanAmount) {
-        // Sorting lenders from lowest to higest rates
+        // Sorting lenders from lowest to highest rates
         lenders.sort(Comparator.comparing(Lender::getRate));
         List<Lender> selectedLenders = new ArrayList<>(0);
         for (Lender lender : lenders) {
-            if (loanAmount.compareTo(lender.getAvailable()) == -1) {
+            if (loanAmount.compareTo(lender.getAvailable()) < 0) {
                 selectedLenders.add(lender);
                 break;
             } else {

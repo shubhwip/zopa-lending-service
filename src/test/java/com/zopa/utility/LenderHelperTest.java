@@ -22,6 +22,6 @@ public class LenderHelperTest {
     @Test
     public void givenListOfLendersAndTheirRates_returnAverageOfTheirRates() {
         // Assert
-        Assertions.assertEquals(new BigDecimal("0.070").setScale(3), LenderHelper.getAverageRate(lenderList));
+        Assertions.assertEquals(new BigDecimal("0.070").setScale(3, BigDecimal.ROUND_HALF_EVEN), LenderHelper.getAverageRate(lenderList));
     }
 }

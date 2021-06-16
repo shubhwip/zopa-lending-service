@@ -35,7 +35,7 @@ public class DefaultLoanValidatorTest {
         // Arrange and Act
         boolean result = loanValidator.validateLoanProvision(lenders, new BigDecimal("1000"));
         // Assert
-        Assertions.assertEquals(true, result);
+        Assertions.assertTrue(result);
     }
 
     @Test

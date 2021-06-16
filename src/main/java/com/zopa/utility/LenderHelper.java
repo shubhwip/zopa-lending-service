@@ -10,18 +10,12 @@ import java.util.List;
 @Slf4j
 public final class LenderHelper {
 
-    /**
-     * Get Average rate.
-     *
-     * @param lenders
-     * @return Average rate
-     */
     public static BigDecimal getAverageRate(final List<Lender> lenders) {
         BigDecimal sum = BigDecimal.ZERO;
         for (Lender lender : lenders) {
             log.debug("Lender Rate inside getAverageRate API, {}", lender.getRate());
             sum = sum.add(lender.getRate(), new MathContext(4));
         }
-        return sum.divide(new BigDecimal(lenders.size()));
+        return sum.divide(new BigDecimal(lenders.size()), BigDecimal.ROUND_HALF_EVEN);
     }
 }

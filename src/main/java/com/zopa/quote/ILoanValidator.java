@@ -5,7 +5,6 @@ import com.zopa.exception.QuoteNotPossibleException;
 import java.math.BigDecimal;
 import java.util.List;
 
-@FunctionalInterface
 public interface ILoanValidator<L> {
-    abstract boolean validateLoanProvision(List<L> lenders, BigDecimal loanAmount) throws QuoteNotPossibleException;
+    boolean validateLoanProvision(List<L> lenders, BigDecimal loanAmount) throws QuoteNotPossibleException;
 }

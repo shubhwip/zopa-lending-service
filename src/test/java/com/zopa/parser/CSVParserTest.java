@@ -17,7 +17,7 @@ import java.util.Map;
 @Slf4j
 public class CSVParserTest {
 
-    IParser parser;
+    IParser<Lender> parser;
 
     @BeforeEach
     public void setup() {
@@ -25,12 +25,12 @@ public class CSVParserTest {
     }
 
     @Test
-    public void givenMultipleCsvFiles_returnsListofLenders() {
+    public void givenMultipleCsvFiles_returnsListOfLenders() {
         // Arrange
         Map<String, Integer> files = new HashMap<String, Integer>() {{
             put("src/test/resources/input/lenders-test1.csv", 2);
             put("src/test/resources/input/lenders-test2.csv", 7);
-            put(null, 0);
+            put("src/test/resources/input/lenders-test3.csv", 7);
         }};
         files.forEach((k, v) -> {
             try {
@@ -46,6 +46,15 @@ public class CSVParserTest {
     }
 
     @Test
+    public void givenCsvFile_WhenPassedAsNull_returnsNPEWithMessage() {
+        // Arrange and Act
+        NullPointerException exceptionThrown = Assertions.assertThrows(NullPointerException.class,
+                () -> parser.getLenders(null));
+        // Assert
+        Assertions.assertTrue(exceptionThrown.getMessage().contains("filename should not be null"));
+    }
+
+    @Test
     public void givenMalformedCSVFileWhereStringIsGivenInsteadOfNumber_returnsInputFileParseException() {
         // Arrange and Act
         Assertions.assertThrows(NumberFormatException.class,
@@ -53,9 +62,9 @@ public class CSVParserTest {
     }
 
     @Test
-    public void givenMalformedCSVFileWhereCSVValuesAreNotInCorrectFormat_returnsInputFileParseException() {
+    public void givenMalformedCSVFileWhereCSVValuesAreAbsentForSomeLenders_returnsAllLendersWithDefaultsZeroSet() {
         // Arrange and Act
-        Assertions.assertThrows(NumberFormatException.class,
+        Assertions.assertThrows(ArrayIndexOutOfBoundsException.class,
                 () -> parser.getLenders("src/test/resources/input/malformed2.csv"));
     }
 
