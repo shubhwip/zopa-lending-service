@@ -106,4 +106,15 @@ public class ZopaLendingServiceComponentTests {
         Assertions.assertTrue(quoteNotPossibleExceptionThrown.getMessage().contains("There are no Lenders available. It is not Possible to provide a quote"));
     }
 
+    @Test
+    public void givenLendersAndRequestedLoanAndCalculateWeightedAverageOfLendingInterest_WhenLoanCanBeProvidedAnd_ReturnQuote() throws InputFileParseException, QuoteNotPossibleException {
+        // Arrange
+        List<Lender> lenders = parser.getLenders("src/test/resources/input/lenders-test1.csv");
+        // Act
+        Quote quote = quoteCalculator.getQuote(lenders, new BigDecimal("1000"));
+        //log.info("Quote {}", quote.toString());
+        // Assert
+        assertThat(new BigDecimal("1115.57").setScale(2, BigDecimal.ROUND_HALF_EVEN), Matchers.comparesEqualTo(quote.getTotalRepayment()));
+    }
+
 }

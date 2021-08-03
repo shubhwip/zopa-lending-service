@@ -18,4 +18,17 @@ public final class LenderHelper {
         }
         return sum.divide(new BigDecimal(lenders.size()), BigDecimal.ROUND_HALF_EVEN);
     }
+
+    // ((Rate of A * amount of A) + (Rate of B * amount of B)) / (amount of A + amount of B)
+
+    public static BigDecimal getWeightedAverageRate(final List<Lender> lenders) {
+        BigDecimal upperSum = BigDecimal.ZERO;
+        // Denominator Sum
+        BigDecimal denSum = BigDecimal.ZERO;
+        for (Lender lender : lenders) {
+            upperSum = upperSum.add(lender.getRate().multiply(lender.getAvailable()), new MathContext(4));
+            denSum = denSum.add(lender.getAvailable());
+        }
+        return upperSum.divide(denSum, BigDecimal.ROUND_HALF_EVEN);
+    }
 }

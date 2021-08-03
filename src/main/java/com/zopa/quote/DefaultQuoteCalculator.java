@@ -10,7 +10,6 @@ import org.javamoney.moneta.Money;
 
 import javax.money.MonetaryAmount;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -32,7 +31,7 @@ public class DefaultQuoteCalculator implements IQuoteCalculator<Quote, Lender> {
         log.debug("Average Interest Rate is {}", avgInterestRate);
         BigDecimal effectiveInterestRate = LoanCalculator.calculate(avgInterestRate, QuoteConstants.DEFAULT_LOAN_PERIOD);
         MonetaryAmount amount = LoanCalculator.calculate(Money.of(loanAmount, QuoteConstants.CURRENCY),
-                effectiveInterestRate.divide(new BigDecimal(QuoteConstants.LOAN_AMORTIZATION_PERIOD), MathContext.DECIMAL32), QuoteConstants.DEFAULT_LOAN_PERIOD);
+                effectiveInterestRate.divide(new BigDecimal(QuoteConstants.LOAN_AMORTIZATION_PERIOD), BigDecimal.ROUND_HALF_EVEN), QuoteConstants.DEFAULT_LOAN_PERIOD);
         BigDecimal monthlyAmount = new BigDecimal(amount.getNumber().toString()).setScale(QuoteConstants.DEFAULT_NUMBER_SCALE, BigDecimal.ROUND_HALF_EVEN);
         return new Quote(loanAmount,
                 effectiveInterestRate.multiply(new BigDecimal("100")).setScale(QuoteConstants.DEFAULT_NUMBER_SCALE, BigDecimal.ROUND_HALF_EVEN),
